@@ -11,7 +11,7 @@ There's just one problem. We all agree animals can `eat`, so we will add that me
 
 ```java
 Animal a = new Animal();
-a.eat(); // not clear what this should do
+a.eat(); // its not clear what this should do
 ```
 
 The solution is abstract classes. Of course every animal can eat, but the implementation details of how the animal eats depends on the specific animal. In this case we say that the method `eat` is ***abstract*** (this is a Java keyword). We can defer implementation of an abstract method for the child class to decide.
