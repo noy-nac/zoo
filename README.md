@@ -1,6 +1,8 @@
 
 # Zoo Project
 
+![image](./abstract_heiarchy.png)
+
 ## Why Use Abstract Classes?
 
 Welcome to the Land of the Wild (a zoo). In this zoo, there are two kinds of inhabitants, **animals** and **food**. Animals, like the humble `Dog`, the unhumble `Cat`, and the friendly neighborhood `Rat`, are capable of two actions: `eat` and `move`. Additionally, animals have a intrinsic desire to seekout food, called `hunger`, and they can also get sick! Food, on the other hand, can really only do one thing: `beEaten`.
@@ -38,7 +40,7 @@ Animal cat = new Animal();
 cat.eat(); // undefined behavior
 ```
 
-Here's what our abstract class Animal might look like. Note that our final implementation will actually have more complexity than this example.
+Here's what our abstract class `Animal` might look like. ***Our final implementation will actually have more complexity than this example.***
 
 ```java
 public abstract class Animal {
@@ -55,28 +57,24 @@ public abstract class Animal {
     public abstract void move();
 }
 ```
+## Required Class Heiarchy
 
-##
+Abstract methods are identified in *italics*! 
 
 ![image](./abstract_heiarchy.png)
 
 ## Required Classes
-- Entity (abstract)
-- Animal (abstract)
-- Food (abstract)
+- `abstract class Entity` (abstract)`
+    - `void tick(Zoo z)`
+- `Animal` (abstract)
+- `abstract class Food`
+- Cat (concrete)
+- Dog (concrete)
+- Rat (concrete)
+- Cheese (concrete)
+- Ham (concrete)
 
-## 
-
-
-
-## Animal
-
-### Cat
- - A cat has 9 lives
-
-`abstract class ZooEntity`
-
-`abstract class Animal`
+##  Tutorial
 
 
 
