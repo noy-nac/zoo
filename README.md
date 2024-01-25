@@ -58,7 +58,7 @@ public abstract class Animal {
 
 ##
 
-![image](files://abstract_heiarchy.png)
+![image](./abstract_heiarchy.png)
 
 ## Required Classes
 - Entity (abstract)
