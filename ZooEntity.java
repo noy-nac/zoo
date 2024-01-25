@@ -1,4 +1,7 @@
 
+import java.util.Random;
+
+import java.awt.Graphics;
 
 public abstract class ZooEntity {
 
@@ -19,6 +22,18 @@ public abstract class ZooEntity {
 
     public abstract void tick(Zoo zoo);
 
-    public abstract void draw();
+    public abstract void draw(Graphics g);
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public int getX() {
+        return xPos;
+    }
+
+    public int getY() {
+        return yPos;
+    }
 
 }

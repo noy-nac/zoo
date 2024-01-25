@@ -1,13 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
 
+import java.util.*;
+
 public class Zoo extends JPanel {
 
     private int width, height;
-    private LinkedList<ZooEntity> grid[][];
+    private ArrayList<ArrayList<LinkedList<ZooEntity>>> grid;
 
     public Zoo(int w, int h) {
-        grid = new LinkedList<ZooEntity>[h][w];
+        grid = new ArrayList<>(h);
+        for(int y = 0; y < h; y++) {
+            ArrayList<LinkedList<ZooEntity>> row = new ArrayList<>(w);
+            for(int x = 0; x < w; x++) {
+                row.add(new LinkedList<ZooEntity>());
+            }
+            grid.add(row);
+        }
         width = w;
         height = h;
     }
@@ -16,47 +25,83 @@ public class Zoo extends JPanel {
 		super.paintComponent(g); 
 		setBackground(Color.GREEN);
 
-        for(int h = 0; h < height; h++) {
-            for(int w = 0; w < width; w++) {
-                for(ze : grid[h][w]) {
-                    grid[h][w].draw(g);
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                for(ZooEntity ze : grid.get(y).get(x)) {
+                    ze.draw(g);
                 }
             }
         }
 	}
 
-    public ZooEntity tick() {
-        for(int h = 0; h < height; h++) {
-            for(int w = 0; w < width; w++) {
-                if(grid[h][w] != null) {
-                    grid[h][w].tick(this);
+    public void tick() {
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                for(int i = grid.get(y).get(x).size() - 1; i >= 0; i--) {
+
+                    ZooEntity ze = grid.get(y).get(x).remove(i);
+
+                    if(ze.isAlive()) {
+                        ze.tick(this);
+                        grid.get(wrap(ze.getY(), height)).get(wrap(ze.getX(), width)).add(ze);
+
+                        for 
+                    }
                 }
             }
         }
     }
 
-    public ZooEntity at(int x, int y) {
-        return grid[y % height][x % width];
+    public ArrayList<ZooEntity> at(int x, int y) {
+        return new ArrayList<ZooEntity>(grid.get(wrap(y, height)).get(wrap(x, width)));
     }
 
-    public List<ZooEntity> getTouching(ZooEntity ze) {
-        List<ZooEntity> touching = new ArrayList<>(grid[ze.getY() % height][ze.getX() % width]);
+    public void add(ZooEntity ze) {
+        grid.get(wrap(ze.getY(), height)).get(wrap(ze.getX(), width)).add(ze);
+    }
+
+    public static int wrap(int val, int limit) {
+        if(val >= 0) return val % limit;
+        else         return (limit - val) % limit;
     }
 
     public static void main(String[] args) {
         Zoo zoo = new Zoo(25, 25);
 
-        JFrame frame = new JFrame("Train");
+        Random rand = new Random();
+
+        JFrame frame = new JFrame("Zoo");
 		frame.setSize(500,500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.add(zoo);
 		frame.setVisible(true);
 
+        zoo.add(new Cat("Leo", 0, 0));
+        zoo.add(new Cat("Sam", 1, 1));
+        zoo.add(new Cat("Max", 20, 20));
+        zoo.add(new Cat("Mark", 24, 24));
+
+        zoo.add(new DeliHam(10, 5));
+
+        int i = 0;
         while(true) {
-            Thread.sleep(250);
+            try {
+            Thread.sleep(100);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+            if(i % 100 == 0) {
+                zoo.add(new DeliHam(rand.nextInt(25), rand.nextInt(25)));
+            }
+
             zoo.tick();
             // repaint code here
+            zoo.revalidate();
+            zoo.repaint();
+            i++;
         }
     }
 
