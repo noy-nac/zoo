@@ -3,16 +3,21 @@ import java.util.Random;
 
 import java.awt.Graphics;
 
-public abstract class ZooEntity {
+public abstract class Entity {
 
     protected static Random rand = new Random();
+
+    private static int lastID = 0;
+    protected int id;
 
     protected String name;
     protected int xPos, yPos;
     protected int age;
     protected boolean isAlive;
 
-    public ZooEntity(String name, int x, int y) {
+    public Entity(String name, int x, int y) {
+        this.id = lastID;
+        lastID = lastID + 1;
         this.name = name;
         this.xPos = x;
         this.yPos = y;

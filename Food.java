@@ -1,6 +1,6 @@
 
 
-public abstract class Food extends ZooEntity  {
+public abstract class Food extends Entity  {
 
     protected boolean animal_product;
     protected boolean vegtable_product;
@@ -14,7 +14,7 @@ public abstract class Food extends ZooEntity  {
         this.nutrition = nutrition;
     }
 
-    public abstract void beEaten();
+    public abstract void beEaten(Animal eater);
 
     public int getNutrition() {
         return nutrition;

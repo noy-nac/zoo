@@ -1,6 +1,5 @@
 
 import java.util.*;
-
 import java.awt.*;
 
 public class Cat extends Animal {
@@ -9,7 +8,7 @@ public class Cat extends Animal {
 
     public Cat(String name, int x, int y) {
         super(name, x, y);
-
+        this.hunger = 100;
         this.lives = 9;
     }
 
@@ -19,13 +18,13 @@ public class Cat extends Animal {
             if(food.isVegtableProduct()) {
                 if(hunger > 10 && rand.nextDouble() > 0.99) {
                     hunger -= food.getNutrition();
-                    food.beEaten();
+                    food.beEaten(this);
                 }
             }
             else {
                 if(hunger > 10 && rand.nextDouble() > 0.50) {
                     hunger -= food.getNutrition();
-                    food.beEaten();
+                    food.beEaten(this);
                 }
             }
         }
@@ -33,10 +32,30 @@ public class Cat extends Animal {
 
     @Override
     public void tick(Zoo zoo) {
-        age++;
+        if(isSick) {
+            age += 2;
+            if(Zoo.rand.nextDouble() < 0.1) {
+                isSick = false;
+            }
+        }
+        else {
+            age++;
+        }
+
+        if(age > 2000) {
+            isAlive = false;
+            return;
+        }
 
         if(age%10 == 0) {
+            hunger += 5;
             move(zoo);
+        }
+        ArrayList<Entity> onNow = zoo.at(xPos, yPos);
+        for(Entity other : onNow) {
+            if(other instanceof Food) {
+                eat((Food)other); // GACK (?)
+            }
         }
     }
 
@@ -51,7 +70,7 @@ public class Cat extends Animal {
         for(int dx : dxVals) {
             for(int dy : dyVals) {
 
-                ArrayList<ZooEntity> here = zoo.at(xPos+dx, yPos+dy);
+                ArrayList<Entity> here = zoo.at(xPos+dx, yPos+dy);
 
                 if(here.size() > 0 && here.get(0) instanceof Food) {
                     chaseSpaces.add(new int[]{xPos+dx, yPos+dy});
@@ -64,21 +83,13 @@ public class Cat extends Animal {
         
         if(chaseSpaces.size() > 0) {
             int xy[] = chaseSpaces.get(rand.nextInt(chaseSpaces.size()));
-            System.out.println("chase" + xy[0] + " " + xy[1]);
             xPos = xy[0];
             yPos = xy[1];
         }
-        /*else if(runSpaces.size() > 0) {
-            int xy[] = runSpaces.get(rand.nextInt(runSpaces.size()));
-            System.out.println("run " + xy[0] + " " + xy[1] + " " + runSpaces.size());
-            xPos = xy[0];
-            yPos = xy[1];
-        }*/
         else {
             xPos += new int[]{1, 0, -1}[rand.nextInt(3)];
             yPos += new int[]{1, 0, -1}[rand.nextInt(3)];
         }
-        System.out.println("moved");
 
     }
 
@@ -86,7 +97,6 @@ public class Cat extends Animal {
     public void draw(Graphics g) {
         g.setColor(Color.RED);
         g.fillRect(Zoo.wrap(xPos,25)*20, Zoo.wrap(yPos,25)*20, 20, 20);
-        System.out.println(xPos + " " + yPos);
     }
 
 }

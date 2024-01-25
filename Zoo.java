@@ -5,15 +5,17 @@ import java.util.*;
 
 public class Zoo extends JPanel {
 
+    public static Random rand = new Random();
+
     private int width, height;
-    private ArrayList<ArrayList<LinkedList<ZooEntity>>> grid;
+    private ArrayList<ArrayList<LinkedList<Entity>>> grid;
 
     public Zoo(int w, int h) {
         grid = new ArrayList<>(h);
         for(int y = 0; y < h; y++) {
-            ArrayList<LinkedList<ZooEntity>> row = new ArrayList<>(w);
+            ArrayList<LinkedList<Entity>> row = new ArrayList<>(w);
             for(int x = 0; x < w; x++) {
-                row.add(new LinkedList<ZooEntity>());
+                row.add(new LinkedList<Entity>());
             }
             grid.add(row);
         }
@@ -27,7 +29,7 @@ public class Zoo extends JPanel {
 
         for(int y = 0; y < height; y++) {
             for(int x = 0; x < width; x++) {
-                for(ZooEntity ze : grid.get(y).get(x)) {
+                for(Entity ze : grid.get(y).get(x)) {
                     ze.draw(g);
                 }
             }
@@ -39,24 +41,22 @@ public class Zoo extends JPanel {
             for(int x = 0; x < width; x++) {
                 for(int i = grid.get(y).get(x).size() - 1; i >= 0; i--) {
 
-                    ZooEntity ze = grid.get(y).get(x).remove(i);
+                    Entity ze = grid.get(y).get(x).remove(i);
 
                     if(ze.isAlive()) {
                         ze.tick(this);
                         grid.get(wrap(ze.getY(), height)).get(wrap(ze.getX(), width)).add(ze);
-
-                        for 
                     }
                 }
             }
         }
     }
 
-    public ArrayList<ZooEntity> at(int x, int y) {
-        return new ArrayList<ZooEntity>(grid.get(wrap(y, height)).get(wrap(x, width)));
+    public ArrayList<Entity> at(int x, int y) {
+        return new ArrayList<Entity>(grid.get(wrap(y, height)).get(wrap(x, width)));
     }
 
-    public void add(ZooEntity ze) {
+    public void add(Entity ze) {
         grid.get(wrap(ze.getY(), height)).get(wrap(ze.getX(), width)).add(ze);
     }
 
@@ -68,7 +68,7 @@ public class Zoo extends JPanel {
     public static void main(String[] args) {
         Zoo zoo = new Zoo(25, 25);
 
-        Random rand = new Random();
+        
 
         JFrame frame = new JFrame("Zoo");
 		frame.setSize(500,500);
@@ -87,13 +87,13 @@ public class Zoo extends JPanel {
         int i = 0;
         while(true) {
             try {
-            Thread.sleep(100);
+            Thread.sleep(50);
             }
             catch(Exception e) {
                 e.printStackTrace();
             }
 
-            if(i % 100 == 0) {
+            if(i % 50 == 0) {
                 zoo.add(new DeliHam(rand.nextInt(25), rand.nextInt(25)));
             }
 
