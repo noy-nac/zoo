@@ -17,7 +17,7 @@ public class DeliHam extends Food {
 
     public void draw(Graphics g) {
         g.setColor(Color.PINK);
-        g.fillRect(Zoo.wrap(xPos,25)*20, Zoo.wrap(yPos,25)*20, 20, 20);
+        g.fillRect(Zoo.wrap(xPos,Zoo.ZOO_COLS)*Zoo.SCALE, Zoo.wrap(yPos,Zoo.ZOO_ROWS)*Zoo.SCALE, Zoo.SCALE, Zoo.SCALE);
     }
 
     public void beEaten(Animal eater) {

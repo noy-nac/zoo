@@ -5,6 +5,10 @@ import java.util.*;
 
 public class Zoo extends JPanel {
 
+    public static final int ZOO_ROWS = 30;
+    public static final int ZOO_COLS = 30;
+    public static final int SCALE = 25;
+
     public static Random rand = new Random();
 
     private int width, height;
@@ -71,7 +75,7 @@ public class Zoo extends JPanel {
         
 
         JFrame frame = new JFrame("Zoo");
-		frame.setSize(500,500);
+		frame.setSize(ZOO_COLS * SCALE, ZOO_ROWS * SCALE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.add(zoo);
@@ -94,7 +98,7 @@ public class Zoo extends JPanel {
             }
 
             if(i % 50 == 0) {
-                zoo.add(new DeliHam(rand.nextInt(25), rand.nextInt(25)));
+                zoo.add(new DeliHam(rand.nextInt(ZOO_COLS), rand.nextInt(ZOO_ROWS)));
             }
 
             zoo.tick();

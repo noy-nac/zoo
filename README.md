@@ -1,22 +1,24 @@
 
-# Zoo Project
+# The Zoo Project
 
-![image](./abstract_heiarchy.png)
-
-## Why Use Abstract Classes?
+> Link: [Java Abstract Classes](https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html)
 
 Welcome to the Land of the Wild (a zoo). In this zoo, there are two kinds of inhabitants, **animals** and **food**. Animals, like the humble `Dog`, the unhumble `Cat`, and the friendly neighborhood `Rat`, are capable of two actions: `eat` and `move`. Additionally, animals have a intrinsic desire to seekout food, called `hunger`, and they can also get sick! Food, on the other hand, can really only do one thing: `beEaten`.
 
-As you may have guessed, we will use inheritance to add structure to our Zoo program. For example, a `Cat` is an `Animal` so `Cat` will extend `Animal`. Then any methods we define in `Animal` can be used in `Cat`.
+As you may have guessed, we will use inheritance to add structure to our Zoo program. For example, a cat is an animal so `Cat` will extend `Animal`. Then any methods we define in `Animal` can be used in `Cat`.
 
-There's just one problem. We all agree animals can `eat`, so we will add that method to the `Animal` class for `Cat` to inherit. But what does an *animal* eat? Not a cat or a dog, but an *animal* in the abstract. Every animal eats different things. It's not clear how we should implement `eat` in the parent class even though surely every animal *can* `eat`.
+
+## Why Use Abstract Classes?
+
+There's just one problem. We all agree animals can `eat`, so we will add that method to the `Animal` class for `Cat` to inherit. But what does an *animal* eat? Not a cat or a dog, but an animal *in the abstract.* Every animal eats different things. It's not clear how we should implement `eat` in the parent class even though surely every animal *can* `eat`.
+
 
 ```java
 Animal a = new Animal();
 a.eat(); // its not clear what this should do
 ```
 
-The solution is abstract classes. Of course every animal can eat, but the implementation details of how the animal eats depends on the specific animal. In this case we say that the method `eat` is ***abstract*** (this is a Java keyword). We can defer implementation of an abstract method for the child class to decide.
+The solution is abstract classes. Of course every animal can eat, but the implementation details of how the animal eats depends on the specific animal. In this case we say that the method `eat` is ***abstract*** (this is a Java keyword). We can defer the implementation of an abstract method for the child class to decide.
 
 Furthermore, since the concrete child class actually inherits the method from its abstract parent class, the child class MUST implement it (otherwise our code will not compile). Therefore, at runtime our child class is **guranteed** to have behavior associated with the inherited method, unlike the parent class, which by definition has no behavior associated with the abstract method.
 
@@ -24,14 +26,14 @@ Any class that has at least one abstract method, must itself be abstract. ***It 
 
 Legal:
 ```java
-Animal cat = new Cat();
-cat.eat();
+Cat cat = new Cat();
+cat.eat(); // Cat inherits eat() from Animal
 ```
 
 Also legal:
 ```java
-Cat cat = new Cat();
-cat.eat();
+Animal cat = new Cat();
+cat.eat(); // the underlying Animal object was instanciated using new Cat() and therefore has a valid eat() method
 ```
 
 Illegal:
@@ -63,18 +65,30 @@ Abstract methods are identified in *italics*!
 
 ![image](./abstract_heiarchy.png)
 
-## Required Classes
-- `abstract class Entity` (abstract)`
-    - `void tick(Zoo z)`
-- `Animal` (abstract)
-- `abstract class Food`
-- Cat (concrete)
-- Dog (concrete)
-- Rat (concrete)
-- Cheese (concrete)
-- Ham (concrete)
+## Provided Classes
+- `Zoo`
+    -
 
-##  Tutorial
+## Required Abstract Classes
+- `Entity`
+    - `void draw(Graphics g)` (abstract)
+    - `void tick(Zoo z)` (abstract)
+    - ``
+- `Animal` extends `Entity`
+- `Food` extends `Entity`
+
+## Required Concrete Classes
+
+Each concrete class must implement the abstract methods from *all* parent classes, in addition to any other code necessary to create the functionality described below.
+
+- `Cat` extends `Animal`
+- `Dog` extends `Animal`
+- `Rat` extends `Animal` AND `Food`
+- `Cheese` extends `Food`
+- `Ham` extends `Food`
+
+##  Tips
+- Focus on creating the 
 
 
 
