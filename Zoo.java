@@ -5,9 +5,9 @@ import java.util.*;
 
 public class Zoo extends JPanel {
 
-    public static final int ZOO_ROWS = 30;
-    public static final int ZOO_COLS = 30;
-    public static final int SCALE = 25;
+    public static final int ZOO_ROWS = 30; // height
+    public static final int ZOO_COLS = 40; // width
+    public static final int SCALE = 30;
 
     public static Random rand = new Random();
 
@@ -30,6 +30,14 @@ public class Zoo extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g); 
 		setBackground(Color.GREEN);
+
+        g.setColor(new Color(0, 200, 0)); // dark green
+        for(int y = 0; y < height; y++) {
+            g.drawLine(0, y * SCALE, width * SCALE, y * SCALE);
+        }
+        for(int x = 0; x < width; x++) {
+            g.drawLine(x * SCALE, 0, x * SCALE, height * SCALE);
+        }
 
         for(int y = 0; y < height; y++) {
             for(int x = 0; x < width; x++) {
@@ -64,23 +72,22 @@ public class Zoo extends JPanel {
         grid.get(wrap(ze.getY(), height)).get(wrap(ze.getX(), width)).add(ze);
     }
 
-    public static int wrap(int val, int limit) {
-        if(val >= 0) return val % limit;
-        else         return (limit - val) % limit;
+    public static int wrap(int val, int thresh) {
+        if(val >= 0) return val % thresh;
+        else         return (thresh - val) % thresh;
     }
 
     public static void main(String[] args) {
-        Zoo zoo = new Zoo(25, 25);
-
-        
+        Zoo zoo = new Zoo(ZOO_COLS, ZOO_ROWS);
 
         JFrame frame = new JFrame("Zoo");
-		frame.setSize(ZOO_COLS * SCALE, ZOO_ROWS * SCALE);
+		frame.setSize(ZOO_COLS * SCALE + SCALE/2, ZOO_ROWS * SCALE + SCALE/2 + 23);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.add(zoo);
 		frame.setVisible(true);
 
+        // Add some animals, food here
         zoo.add(new Cat("Leo", 0, 0));
         zoo.add(new Cat("Sam", 1, 1));
         zoo.add(new Cat("Max", 20, 20));
@@ -88,7 +95,7 @@ public class Zoo extends JPanel {
 
         zoo.add(new DeliHam(10, 5));
 
-        int i = 0;
+        int ticks = 0;
         while(true) {
             try {
             Thread.sleep(50);
@@ -97,15 +104,16 @@ public class Zoo extends JPanel {
                 e.printStackTrace();
             }
 
-            if(i % 50 == 0) {
+            if(ticks % 50 == 0) {
                 zoo.add(new DeliHam(rand.nextInt(ZOO_COLS), rand.nextInt(ZOO_ROWS)));
             }
 
             zoo.tick();
-            // repaint code here
+
             zoo.revalidate();
             zoo.repaint();
-            i++;
+
+            ticks++;
         }
     }
 
