@@ -68,7 +68,7 @@ Abstract methods are identified in *italics*!
 ## Provided Classes
 - ### `Zoo` extends `JPanel`
     - Feel free to take a look inside to get a better idea of how it works
-    - #### Useful varibles:
+    - #### Useful variables:
         - `Zoo.rand` (static)
             - Use this to get any random number in other classes
         - `Zoo.ZOO_ROW`, `Zoo.ZOO_COLS`, `Zoo.SCALE` (static)
