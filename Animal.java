@@ -1,7 +1,7 @@
 
 // TODO: extend Entity
 // TODO: make Animal abstract
-public abstract class Animal extends Entity {
+public class Animal {
 
     // TODO: instance variables
 
