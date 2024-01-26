@@ -134,7 +134,7 @@ Each concrete class must implement the abstract methods from *all* parent classe
     - When its hunger is greater than 25, a cat has a 99% chance to eat any food it touches that is an animal product ONLY
     - In general cats will move in a random direction once every 10 ticks
         - If a cat would move into the cell of another animal, they will instead move in the opposite direction
-        - Exception: a cat will always move towards adjacent food including food this is also an animal (rats)
+        - Exception: a cat will always move towards adjacent food including food that is also an animal (rats)
             - This is the case even if the cat is not hungry (hunting instinct)
     - Two cats in an adjacent cells have a 10% chance of spawning a new cat nearby
 
