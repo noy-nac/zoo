@@ -114,7 +114,7 @@ Abstract methods are identified in *italics*!
         - Whether or not the food is a vegtable product
         - The nutritional value of the food
     - #### `void beEaten(Animal a)` (abstract)
-        - Call this method from the `eat` method once you are sure
+        - Call this method from the `eat` method once you are sure the Animal will eat the food
 
 - ### Print the following information to the console:
     - When an animal is born, e.g., "Cat Alice was born today!" 
