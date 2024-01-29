@@ -149,6 +149,7 @@ Each concrete class must implement the abstract methods from *all* parent classe
     - When a dog dies, it has a 50% chance to spawn one new dog and a 25% chance to spawn a second new dog nearby
 
 - ### `Rat` extends `Animal` AND `Food`
+    - ***NOTE: I messed up here. Multiple inheritance is not possible in Java. It is YOUR choice whether Rat inherits from Animal or Food.***
     - A rat has 1 life and desparately tries to keep it
         - After 500 ticks, a rat has a 1.5% chance of dying per tick, 20% if the rat is sick
         - If a rat is at all sick, it has at minimum a 1% chance of dying per tick
